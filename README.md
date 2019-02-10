@@ -5,7 +5,7 @@ Cell-luokka kuvaa yksittäistä solua
 
 Matrix- luokkaa käytetään vain jälkikuvien tekoon ja päivitykseen atm.
 
-(Todo: muuta cellmatrix & tempmatrix solukokoelmista Matrix-luokan instansseiksi)
+(Todo: muuta cellmatrix & tempmatrix solukokoelmista Matrix-luokan instansseiksi. ko. luokka tosin ei ihan valmis tätä varten)
 
 goll_program aka. main päivittelee cell ja temp matriiseja game of lifen sääntöjen mukaan 
 ja aiempia tiloja säilötään aftermatrixin matriiseihin
