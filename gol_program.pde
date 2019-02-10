@@ -4,16 +4,17 @@ int x = 80;  //solujen määrä x- suunnassa
 int y = 80;  //solujen määrä y- suunnassa
 int past;  //hetki jona viimeisin päivitys tehtiin
 int updateInterval =100;  //päivitysten välinen aika
-int likelinessOfStillbirth = 70;  // todennäköisyydellä solu on kuollut kun se alussa luodaan
-int tallness = 25;
+int likelinessOfStillbirth = 70;  // millä todennäköisyydellä solu on kuollut kun se alussa luodaan
+int tallness = 25;//jälkikuvakerrosten määrä
 float zoom = -400;
 color coloring = color(0,0,5);
-int gap = 0;// kerrosten välinen tila
+int gap = 0;// jälkikuvakerrosten välinen etäisyys
 
 //luodaan 2d matriisit, johon menee kaikki nyk. ikkunaan sopivat solut
 Cell[][] cellMatrix;
 Cell[][] tempMatrix;
-Matrix[] afterMatrix;
+Matrix[] afterMatrix;  //säilytyspaikka jälkikuvamatriiseille
+                       //jokainen jälkikuvakerros on oma matriisinsa
 
 void setup(){
   fullScreen(P3D); //HUOM! countNeighbours- funktio olettaa (ainakin tässä vaiheessa), että canvas on neliö!!
@@ -131,9 +132,9 @@ void mouseClicked(){
 void reset(){
    cellMatrix = new Cell[x][y];
   tempMatrix = new Cell[x][y];
-  afterMatrix = new Matrix[tallness];//luodaan aftermatrix generoituvia pylväitä varten.
+  afterMatrix = new Matrix[tallness];//luodaan aftermatrix jälkikuvia varten.
   
-  //täytetään aftermatrixin matriisit soluilla, Matrix- konstruktori huolehtii varsinaisesta täytöstä
+  //täytetään aftermatrix matriiseilla
   for(int i=0; i<tallness;  i++){
     afterMatrix[i] = new Matrix(x,y,(i+1)*cellSize+gap*i, cellSize);
   }
@@ -146,6 +147,8 @@ void reset(){
       if(chance > likelinessOfStillbirth){
         state = 1;
       }
+      //cellMat solut saa arvotut alkuarvot
+      //tempMat kaikki vielä kuolleita -> päivittyy cellMat:n perusteella
       cellMatrix[i][j] = new Cell(cellSize*i - cellSize*x/2, cellSize*j - cellSize*y/2, state, cellSize, 0);
       tempMatrix[i][j] = new Cell(cellSize*i - cellSize*x/2, cellSize*j - cellSize*y/2, 0, cellSize, 0);
     }
